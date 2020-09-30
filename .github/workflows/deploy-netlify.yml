@@ -24,9 +24,9 @@ jobs:
       - name: Get caches
         uses: actions/cache@v2
         with:
-          path:
-            - node_modules
-            - vendor
+          path: |
+            node_modules
+            vendor
           key: ${{ runner.os }}-build-caches
 
       - name: Install node dependencies
@@ -37,7 +37,7 @@ jobs:
 
       - name: Build site with production mode
         run: yarn run production
-      
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
