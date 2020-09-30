@@ -1,5 +1,4 @@
 name: Netlify CI
-runs-on: ubuntu-latest
 on:
   push:
     branches: [ master ]
@@ -8,6 +7,7 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
