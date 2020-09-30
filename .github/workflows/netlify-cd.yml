@@ -11,4 +11,15 @@ jobs:
   hello-world:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello world"
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build_production
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1.11
+        with:
+          publish-dir: './build_production'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
