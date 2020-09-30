@@ -11,23 +11,32 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Node.js environment
+      - name: Setup Node.js
         uses: actions/setup-node@v1.4.3
         with:
           node-version: '12'
 
-      - name: Get node_modules cache
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Get caches
         uses: actions/cache@v2
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-key: ${{ runner.os }}-build
+          path:
+            - node_modules
+            - vendor
+          key: ${{ runner.os }}-build-caches
 
       - name: Install node dependencies
-        run: npm install
+        run: yarn install
+
+      - name: Install PHP dependencies
+        run: composer install
 
       - name: Build site with production mode
-        run: npm run production
+        run: yarn run production
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
